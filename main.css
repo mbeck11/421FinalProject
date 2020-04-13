@@ -1,0 +1,11 @@
+h1{
+    font-family: "Brush Script MT";
+}
+body{
+    background: url("marble.jpg") repeat 0 0;
+}
+.jumbotron{
+    background-image: url("header.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
