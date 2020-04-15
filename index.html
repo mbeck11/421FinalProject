@@ -10,8 +10,15 @@
         <script>
             $(function() {
                 $.get("selectEars.php",function(data){
-                    $("#list").html(json.parse(data));
-                })
+                    let d = JSON.parse(data.split("<script>")[0]);
+                    let h = "";
+                    console.log(d);
+                    for(let i =0;i<d.length;i++){
+                        h+="<div class=\"col-sm-4\"><img class=\"preview\" src=\""+d[i].Picture+"\"><br><h3>"+d[i].Name+" - $"+d[i].Price+"</h3></div>"
+                    }
+                    console.log(h);
+                    $("#list").html(h);
+                });
             });
         </script>
     </head>
@@ -21,7 +28,7 @@
         <nav class="navbar navbar-default">
             <ul class="nav navbar-nav">
               <li><a href="#">Home</a></li>
-              <li><a href="#">Shop</a></li>
+              <li><a href="signin.html">Sign In</a></li>
               <li><a href="#">Cart</a></li>
             </ul>
         </nav>
