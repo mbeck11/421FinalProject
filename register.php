@@ -32,21 +32,23 @@
             $stmt->close();
         }
         if(!empty($username)){
-            $sql = "INSERT INTO Customer (Username, Password, Address, Name) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO Customer (Username, Password, Address, Name, State, Zip) VALUES (?, ?, ?, ?, ?, ?)";
          
             if($stmt = $conn->prepare($sql)){
                 // Bind variables to the prepared statement as parameters
-                $stmt->bind_param("ssss", $param_username, $param_password, $param_address,$param_name);
+                $stmt->bind_param("sssssi", $param_username, $param_password, $param_address,$param_name, $param_state,$param_zip);
                 
                 // Set parameters
                 $param_username = $username;
                 $param_password = $_POST["password"];//password_hash($_POST["password"], PASSWORD_DEFAULT); // Creates a password hash
                 $param_address=$_POST["address"];
                 $param_name=$_POST["name"];
+                $param_state=$_POST["state"];
+                $param_zip=intval($_POST["zip"]);
                 // Attempt to execute the prepared statement
                 if($stmt->execute()){
                     // Redirect to login page
-                    header("Location:signin.html");
+                    header("Location:login.html");
                 } else{
                     echo "Something went wrong. Please try again later.";
                 }

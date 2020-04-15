@@ -1,11 +1,17 @@
-h1{
-    font-family: "Brush Script MT";
-}
+
 body{
     background: url("marble.jpg") repeat 0 0;
+    font-family: "Century Gothic","CenturyGothic","AppleGothic","sans-serif"; 
 }
 .jumbotron{
     background-image: url("header.jpg");
     background-size: 100% 100%;
     background-repeat: no-repeat;
+}
+.preview{
+    width:100%;
+    height: Auto;
+}
+.picture{
+    padding:5px;
 }
