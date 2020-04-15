@@ -14,7 +14,7 @@
                     let h = "";
                     console.log(d);
                     for(let i =0;i<d.length;i++){
-                        h+="<div class=\"col-sm-4\"><img class=\"preview\" src=\""+d[i].Picture+"\"><br><h3>"+d[i].Name+" - $"+d[i].Price+"</h3></div>"
+                        h+="<div align=\"center\" class=\"col-sm-4 picture\"><img class=\"preview\" src=\""+d[i].Picture+"\"><br><h3>"+d[i].Name+" - $"+d[i].Price+"</h3></br><button class=\"btn btn-secondary btn-lg btn-block\">Add to Cart</button></div>"
                     }
                     console.log(h);
                     $("#list").html(h);
@@ -28,7 +28,7 @@
         <nav class="navbar navbar-default">
             <ul class="nav navbar-nav">
               <li><a href="#">Home</a></li>
-              <li><a href="signin.html">Sign In</a></li>
+              <li><a href="login.html">Sign In</a></li>
               <li><a href="#">Cart</a></li>
             </ul>
         </nav>
