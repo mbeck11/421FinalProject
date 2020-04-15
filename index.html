@@ -7,6 +7,13 @@
         <link rel="stylesheet" href="main.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script>
+            $(function() {
+                $.get("selectEars.php",function(data){
+                    $("#list").html(json.parse(data));
+                })
+            });
+        </script>
     </head>
     <body>
         <div class="jumbotron text-center">
@@ -18,5 +25,8 @@
               <li><a href="#">Cart</a></li>
             </ul>
         </nav>
+        <div id="list">
+
+        </div>
     </body>
 </html>
