@@ -14,7 +14,7 @@
         }
         if($row["Password"]==$_POST["password"])
         {
-            setcookie("user",json_encode($row));
+            setcookie("user",htmlspecialchars(json_encode($row)));
             header("Location:index.html");
         }
         else{

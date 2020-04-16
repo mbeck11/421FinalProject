@@ -8,27 +8,53 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script>
+            function decodeHtml(html) {
+                var txt = document.createElement("textarea");
+                txt.innerHTML = html;
+                return txt.value;
+            }
+            //code to run at the load of the html file.
             $(function() {
+                //make an http request to the php back end.
                 $.get("selectEars.php",function(data){
+                    //code to fill the body of the page with the images.
                     let d = JSON.parse(data.split("<script>")[0]);
-                    let h = "";
-                    console.log(d);
+                    let h = "<div class=\"row\">";
                     for(let i =0;i<d.length;i++){
-                        h+="<div align=\"center\" class=\"col-sm-4 picture\"><img class=\"preview\" src=\""+d[i].Picture+"\"><br><h3>"+d[i].Name+" - $"+d[i].Price+"</h3></br><button class=\"btn btn-secondary btn-lg btn-block\">Add to Cart</button></div>"
+                        h+="<div class=\"col-sm-4\"><img class=\"preview\" src=\""+d[i].Picture+"\"><br><h3>"+d[i].Name+" - $"+d[i].Price+"</h3></br><button class=\"btn btn-secondary btn-lg btn-block\">Add to Cart</button></div>"
+                        if( (i+1)%3==0){
+                            h+="</div> <div class=\"row\">";
+                        }
                     }
-                    console.log(h);
+                    h+="</div>";
+                    //put the body into the div with the id list
                     $("#list").html(h);
                 });
+
+                let cookieArray = document.cookie.split(";");
+                for(let i = 0;i<cookieArray.length;i++){
+                    let s = cookieArray[i].split("=");
+                    if (s[0]=="user"){
+                        console.log(s[1]);
+                        if(s[1]!=""){
+                            let info = JSON.parse(unescape(s[1]).replace(/&quot;/g,"\""));
+                            $("#name").html("<p>Welcome, "+info.Name+"</p>");
+                            $("#login").html("Log Out");
+                            $("#login").attr("href","logout.php");
+                        }
+                    }
+                }
             });
         </script>
     </head>
     <body>
         <div class="jumbotron text-center">
         </div>
+        <h3 align="right" id="name"></h3>
         <nav class="navbar navbar-default">
             <ul class="nav navbar-nav">
               <li><a href="#">Home</a></li>
-              <li><a href="login.html">Sign In</a></li>
+              <li><a id="login" href="login.html">Sign In</a></li>
               <li><a href="#">Cart</a></li>
             </ul>
         </nav>
