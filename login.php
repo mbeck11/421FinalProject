@@ -15,6 +15,7 @@
         if($row["Password"]==$_POST["password"])
         {
             setcookie("user",json_encode($row));
+            header("Location:index.html");
         }
         else{
             echo "Incorrect password <br> <a href=\"login.html\">Return to Sign in</a>";
