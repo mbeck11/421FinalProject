@@ -9,20 +9,30 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script>
             var cart=[];
-            function addToCart(sku){
-                let exists = false;
-                for(let i = 0;i<cart.length;i++){
-                    if(cart[i].sku == sku){
-                        cart[i].number+=1;
-                        exists = true;
-                    }
-                }
-                if(!exists){
-                    cart.push({sku:sku,number:1})
+            var ears;
+            //This is called when there is a change to the qty in order to fix the cookie
+            function change(){
+                for(let i =0;i<cart.length;i++){
+                    cart[i].number=parseInt($("#"+cart[i].sku).val());
                 }
                 document.cookie="cart="+JSON.stringify(cart);
                 setCart();
             }
+            //This function is called once all of the sql calls finish in order to fill the body of the page
+            function fillEars(){
+                let s ="";
+                for(let i =0;i<cart.length;i++){
+                    let ear;
+                    for(let j=0;j<ears.length;j++){
+                        if(ears[j].SKU==cart[i].sku){
+                            ear = ears[j];
+                        }
+                    }
+                    s+="<div class=\"row\" align=\"center\"><div class=\"col-sm-3\"><img class=\"preview\"src=\""+ear.Picture+"\"></div><h2 class=\"col-sm-6\">"+ear.Name+" - $"+ear.Price+"</h2><div class=\"col-sm-3\"><h2>QTY:</h2><input onchange=\"change()\" id=\""+cart[i].sku+"\" value=\""+cart[i].number+"\"type=\"number\"></div></div>";
+                }
+                $("#list").html(s);
+            }
+            //this function is called to set the text in the cart button
             function setCart(){
                 count = 0;
                 for(let i = 0;i<cart.length;i++){
@@ -38,27 +48,19 @@
             }
             //code to run at the load of the html file.
             $(function() {
-                //make an http request to the php back end.
+                //make an http request to the php back end to get all of the ears data.
                 $.get("selectEars.php",function(data){
-                    //code to fill the body of the page with the images.
-                    let d = JSON.parse(data.split("<script>")[0]);
-                    let h = "<div class=\"row\">";
-                    for(let i =0;i<d.length;i++){
-                        h+="<div class=\"col-sm-4\"><img class=\"preview\" src=\""+d[i].Picture+"\"><br><h3>"+d[i].Name+" - $"+d[i].Price+"</h3></br><button onclick=\"addToCart('"+d[i].SKU+"')\" class=\"btn btn-secondary btn-lg btn-block\">Add to Cart</button></div>"
-                        if( (i+1)%3==0){
-                            h+="</div> <div class=\"row\">";
-                        }
-                    }
-                    h+="</div>";
-                    //put the body into the div with the id list
-                    $("#list").html(h);
+                    //store the ear info. 
+                    ears = JSON.parse(data.split("<script>")[0]);
+                    fillEars();
                 });
-
+                //go through the cookies on the page to find the cart and user data.
                 let cookieArray = document.cookie.split(";");
                 for(let i = 0;i<cookieArray.length;i++){
                     let s = cookieArray[i].split("=");
                     if (s[0].trim()=="user"){
                         if(s[1]!=""){
+                            //if there is user data fill in the respective slots
                             let info = JSON.parse(unescape(s[1]).replace(/&quot;/g,"\""));
                             $("#name").html("<p>Welcome, "+info.Name+"</p>");
                             $("#login").html("Log Out");
@@ -66,8 +68,8 @@
                         }
                     }
                     if(s[0].trim()=="cart"){
+                        //handle the cart data
                         if(s[1].trim()!=""){
-                            console.log("t");
                             cart = JSON.parse(unescape(s[1]).replace(/&quot;/g,"\""));
                         }
                     }
@@ -87,8 +89,8 @@
               <li><a id="cart" href="cart.html">Cart</a></li>
             </ul>
         </nav>
+        <button onclick="window.location.href = 'buy.php';" class="btn btn-secondary btn-lg btn-block">Checkout</button>
         <div id="list">
-
         </div>
     </body>
 </html>
