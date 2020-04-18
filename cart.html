@@ -34,10 +34,7 @@
             }
             //this function is called to set the text in the cart button
             function setCart(){
-                count = 0;
-                for(let i = 0;i<cart.length;i++){
-                    count+=cart[i].number;
-                }
+                count = cart.length;
                 if(count==0)
                 {
                     $("#cart").html("Cart");
