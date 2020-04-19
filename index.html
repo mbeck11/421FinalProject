@@ -9,6 +9,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script>
             var cart=[];
+            //Called by button to add item to the cart variable
             function addToCart(sku){
                 let exists = false;
                 for(let i = 0;i<cart.length;i++){
@@ -21,17 +22,6 @@
                     cart.push({sku:sku,number:1})
                 }
                 document.cookie="cart="+JSON.stringify(cart);
-                setCart();
-            }
-            function setCart(){
-                count = cart.length;
-                if(count==0)
-                {
-                    $("#cart").html("Cart");
-                }
-                else{
-                    $("#cart").html("Cart - "+count);
-                }
             }
             //code to run at the load of the html file.
             $(function() {
@@ -56,7 +46,7 @@
                     let s = cookieArray[i].split("=");
                     if (s[0].trim()=="user"){
                         if(s[1]!=""){
-                            let info = JSON.parse(unescape(s[1]).replace(/&quot;/g,"\""));
+                            let info = JSON.parse(unescape(s[1]).replace(/&quot;/g,"\"").replace("+"," "));
                             $("#name").html("<p>Welcome, "+info.Name+"</p>");
                             $("#login").html("Log Out");
                             $("#login").attr("href","logout.php");
@@ -69,7 +59,6 @@
                         }
                     }
                 }
-                setCart();
             });
         </script>
     </head>

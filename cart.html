@@ -16,7 +16,6 @@
                     cart[i].number=parseInt($("#"+cart[i].sku).val());
                 }
                 document.cookie="cart="+JSON.stringify(cart);
-                setCart();
             }
             //This function is called once all of the sql calls finish in order to fill the body of the page
             function fillEars(){
@@ -31,17 +30,6 @@
                     s+="<div class=\"row\" align=\"center\"><div class=\"col-sm-3\"><img class=\"preview\"src=\""+ear.Picture+"\"></div><h2 class=\"col-sm-6\">"+ear.Name+" - $"+ear.Price+"</h2><div class=\"col-sm-3\"><h2>QTY:</h2><input onchange=\"change()\" id=\""+cart[i].sku+"\" value=\""+cart[i].number+"\"type=\"number\"></div></div>";
                 }
                 $("#list").html(s);
-            }
-            //this function is called to set the text in the cart button
-            function setCart(){
-                count = cart.length;
-                if(count==0)
-                {
-                    $("#cart").html("Cart");
-                }
-                else{
-                    $("#cart").html("Cart - "+count);
-                }
             }
             //code to run at the load of the html file.
             $(function() {
@@ -71,7 +59,6 @@
                         }
                     }
                 }
-                setCart();
             });
         </script>
     </head>

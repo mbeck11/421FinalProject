@@ -9,8 +9,8 @@
         $result = $conn->query($sql);
         $r = queryToJson($result);
         $result->close();
+        print_r($r[0]);
         $orderNum = ($r[0]->orderNum==null?1:$r[0]->orderNum+1);
-        echo $orderNum;
         $sql = "INSERT INTO Orders (SKU,Order_Num,Customer_ID) VALUES (?,?,?)";   
         if($stmt = $conn->prepare($sql)){
             // Bind variables to the prepared statement as parameters
@@ -20,14 +20,10 @@
                     $param_SKU = $i->sku;
                     $param_Order_Num=intval($orderNum);
                     $param_Customer = intval($user->Customer_ID);
-                    echo $param_SKU ;
-                    echo $param_Order_Num;
-                    echo $param_Customer;
                     // Attempt to execute the prepared statement
                     if($stmt->execute()){
                         // Redirect to login page
                         //header("Location:login.html");
-                        echo $param_SKU;
                     } else{
                         echo $stmt->error;
                     }
