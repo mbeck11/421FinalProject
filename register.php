@@ -40,7 +40,7 @@
                 
                 // Set parameters
                 $param_username = $username;
-                $param_password = $_POST["password"];//password_hash($_POST["password"], PASSWORD_DEFAULT); // Creates a password hash
+                $param_password = $_POST["password"];
                 $param_address=$_POST["address"];
                 $param_name=$_POST["name"];
                 $param_state=$_POST["state"];
